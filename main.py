@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, redirect
 
 app = Flask(__name__)
 
@@ -41,16 +41,22 @@ def index():
 
 @app.route("/detail")
 def detail():
-    #event = int(request.args["event"])
-    #title = events[event]["name"]
+    event = int(request.args["event"])
+    title = events[event]["name"]
 
     return render_template('event-detail-page.html', title="Detail", event=event)
 
 
-@app.route("/register")
+@app.route("/register", methods=['GET', 'POST'])
 def register():
-    return render_template('register.html', title="Sign in")
+    if request.method == 'POST':
+        print(*[str(key) + ": " + str(val) + ", type: " + str(type(val)) for key, val in request.form.items()], sep='\n')
+        request.form['firstname']
 
+        return redirect('/index')
+
+    # If the method is GET, show the registration page
+    return render_template('register.html')
 
 @app.route("/postevent")
 def postevent():

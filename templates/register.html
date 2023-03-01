@@ -7,7 +7,7 @@
 <div class="register-page">
     <h1>Registering ny medlem</h1>
 
-    <form class="register-form-wrapper">
+    <form class="register-form-wrapper" method="POST" action="/register">
         <div class="register-form">
 
             <div>
@@ -50,6 +50,25 @@
             </div>
         </div>
     </form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#register-form-wrapper').submit(function(event) {
+      // Prevent form submission to server
+      event.preventDefault();
+
+      // Send form data to server using AJAX
+      $.ajax({
+        url: '/register',
+        method: 'POST',
+        data: $(this).serialize(),
+        success: function(response) {
+          alert('Success!');
+        }
+      });
+    });
+  });
+</script>
 </div>
 
 
